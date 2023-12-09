@@ -22,18 +22,25 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
   /** You will need to implement your search and
    * return the appropriate object here. */
 
-  const results = [];
+  // multiple instances of search term in single line( add line for each or first instance)
+  const searchResults = { SearchTerm: searchTerm, Results: [] };
+
+  const isNotValidSearchTerm =
+    (typeof searchTerm === 'string' && searchTerm.length === 0) ||
+    typeof searchTerm !== 'string';
+
+  if (isNotValidSearchTerm) return searchResults;
 
   for (book of scannedTextObj) {
     for (scan of book['Content']) {
       if (scan['Text'].indexOf(searchTerm) > 0)
-        results.push({
+        searchResults.Results.push({
           ISBN: book['ISBN'],
           Page: scan['Page'],
           Line: scan['Line'],
         });
     }
-    return { SearchTerm: searchTerm, Results: results };
+    return searchResults;
   }
 
   var result = {
@@ -81,6 +88,11 @@ const twentyLeaguesOut = {
   ],
 };
 
+const emptySearchTermOut = {
+  SearchTerm: '',
+  Results: [],
+};
+
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
 | | | | \ | |_ _|_   _| |_   _| ____/ ___|_   _/ ___| 
@@ -113,6 +125,15 @@ if (test2result.Results.length == 1) {
   console.log('PASS: Test 2');
 } else {
   console.log('FAIL: Test 2');
+  console.log('Expected:', twentyLeaguesOut.Results.length);
+  console.log('Received:', test2result.Results.length);
+}
+
+const test3result = findSearchTermInBooks('', twentyLeaguesIn);
+if (test3result.Results.length == 0 && test3result.SearchTerm === '') {
+  console.log('PASS: Test 3');
+} else {
+  console.log('FAIL: Test 3');
   console.log('Expected:', twentyLeaguesOut.Results.length);
   console.log('Received:', test2result.Results.length);
 }
