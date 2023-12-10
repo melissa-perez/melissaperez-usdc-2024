@@ -32,23 +32,16 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
   if (isNotValidSearchTerm) return searchResults;
 
   for (book of scannedTextObj) {
-    for (scan of book['Content']) {
-      if (scan['Text'].indexOf(searchTerm) > 0)
+    for (scan of book.Content) {
+      if (scan.Text.indexOf(searchTerm) > 0)
         searchResults.Results.push({
-          ISBN: book['ISBN'],
-          Page: scan['Page'],
-          Line: scan['Line'],
+          ISBN: book.ISBN,
+          Page: scan.Page,
+          Line: scan.Line,
         });
     }
-    return searchResults;
   }
-
-  var result = {
-    SearchTerm: '',
-    Results: [],
-  };
-
-  return result;
+  return searchResults;
 }
 
 /** Example input object. */
@@ -88,6 +81,7 @@ const twentyLeaguesOut = {
   ],
 };
 
+/**Dummy empty output object */
 const emptySearchTermOut = {
   SearchTerm: '',
   Results: [],
