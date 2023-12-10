@@ -22,7 +22,6 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
   /** You will need to implement your search and
    * return the appropriate object here. */
 
-  // multiple instances of search term in single line( add line for each or first instance)
   const searchResults = { SearchTerm: searchTerm, Results: [] };
 
   const isNotValidSearchTerm =
@@ -43,6 +42,13 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
   }
   return searchResults;
 }
+
+/* _____         _     ____        _        
+|_   _|__  ___| |_  |  _ \  __ _| |_ __ _ 
+  | |/ _ \/ __| __| | | | |/ _` | __/ _` |
+  | |  __/\__ \ |_  | |_| | (_| | || (_| |
+  |_|\___||___/\__| |____/ \__,_|\__\__,_|
+  */
 
 /** Example input object. */
 const twentyLeaguesIn = [
@@ -69,7 +75,32 @@ const twentyLeaguesIn = [
   },
 ];
 
-/** Example output object */
+/** Dummy empty input object. */
+const emptyBook = [];
+
+/** Dummy even length input object. */
+const twoBooks = [
+  ...twentyLeaguesIn,
+  {
+    Title: 'Thirty Thousand Leagues Under the Ocean',
+    ISBN: '9780000528522',
+    Content: [
+      {
+        Page: 30,
+        Line: 1,
+        Text: 'now simply went on by her night night momentum. The dark-',
+      },
+      {
+        Page: 30,
+        Line: 2,
+        Text: "ness was then profound; and however good the American's America.",
+      },
+    ],
+  },
+];
+console.log(twoBooks);
+
+/** Example output object. */
 const twentyLeaguesOut = {
   SearchTerm: 'the',
   Results: [
@@ -81,7 +112,19 @@ const twentyLeaguesOut = {
   ],
 };
 
-/**Dummy empty output object */
+/** Example output object for case-sensitive. */
+const twentyLeaguesOutCaseSensitive = {
+  SearchTerm: 'The',
+  Results: [
+    {
+      ISBN: '9780000528531',
+      Page: 31,
+      Line: 8,
+    },
+  ],
+};
+
+/**Dummy empty output object. */
 const emptySearchTermOut = {
   SearchTerm: '',
   Results: [],
@@ -123,11 +166,24 @@ if (test2result.Results.length == 1) {
   console.log('Received:', test2result.Results.length);
 }
 
+/** Checks to see if an empty searchterm returns the empty object. */
 const test3result = findSearchTermInBooks('', twentyLeaguesIn);
 if (test3result.Results.length == 0 && test3result.SearchTerm === '') {
   console.log('PASS: Test 3');
 } else {
   console.log('FAIL: Test 3');
-  console.log('Expected:', twentyLeaguesOut.Results.length);
-  console.log('Received:', test2result.Results.length);
+  console.log('Expected:', emptySearchTermOut.Results.length);
+  console.log('Received:', test3result.Results.length);
+}
+
+/** Checks case-sensitivity of searchterm. */
+const test4result = findSearchTermInBooks('The', twentyLeaguesIn);
+if (
+  JSON.stringify(twentyLeaguesOutCaseSensitive) === JSON.stringify(test4result)
+) {
+  console.log('PASS: Test 4');
+} else {
+  console.log('FAIL: Test 4');
+  console.log('Expected:', twentyLeaguesOutCaseSensitive);
+  console.log('Received:', test4result);
 }
