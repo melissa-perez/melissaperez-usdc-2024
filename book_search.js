@@ -48,9 +48,15 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
   | |/ _ \/ __| __| | | | |/ _` | __/ _` |
   | |  __/\__ \ |_  | |_| | (_| | || (_| |
   |_|\___||___/\__| |____/ \__,_|\__\__,_|
-  */
+*/
+
+// Input Data
+
+/** Empty input object. No books added.*/
+const emptyBook = [];
 
 /** Example input object. */
+// Given input object, with 1 book.
 const twentyLeaguesIn = [
   {
     Title: 'Twenty Thousand Leagues Under the Sea',
@@ -75,10 +81,7 @@ const twentyLeaguesIn = [
   },
 ];
 
-/** Dummy empty input object. */
-const emptyBook = [];
-
-/** Dummy even length input object. */
+/** Input object of even length. Contains two books. */
 const twoBooks = [
   ...twentyLeaguesIn,
   {
@@ -93,14 +96,22 @@ const twoBooks = [
       {
         Page: 30,
         Line: 2,
-        Text: "ness was then profound; and however good the American's America.",
+        Text: "ness was then profound; and however good the American's America...",
       },
     ],
   },
 ];
-console.log(twoBooks);
+
+// Output Data
+
+/** Empty output object for missing or invalid searchterm. */
+const emptySearchTermOut = {
+  SearchTerm: '',
+  Results: [],
+};
 
 /** Example output object. */
+// Given output object, with one result.
 const twentyLeaguesOut = {
   SearchTerm: 'the',
   Results: [
@@ -112,7 +123,7 @@ const twentyLeaguesOut = {
   ],
 };
 
-/** Example output object for case-sensitive. */
+/** Example output object for case-sensitive given test. */
 const twentyLeaguesOutCaseSensitive = {
   SearchTerm: 'The',
   Results: [
@@ -124,20 +135,13 @@ const twentyLeaguesOutCaseSensitive = {
   ],
 };
 
-/**Dummy empty output object. */
-const emptySearchTermOut = {
-  SearchTerm: '',
-  Results: [],
-};
-
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
 | | | | \ | |_ _|_   _| |_   _| ____/ ___|_   _/ ___| 
 | | | |  \| || |  | |     | | |  _| \___ \ | | \___ \ 
 | |_| | |\  || |  | |     | | | |___ ___) || |  ___) |
- \___/|_| \_|___| |_|     |_| |_____|____/ |_| |____/ 
-                                                      
- */
+ \___/|_| \_|___| |_|     |_| |_____|____/ |_| |____/                                                     
+*/
 
 /* We have provided two unit tests. They're really just `if` statements that
  * output to the console. We've provided two tests as examples, and
@@ -147,6 +151,7 @@ const emptySearchTermOut = {
  * */
 
 /** We can check that, given a known input, we get a known output. */
+// Given test for positive match, checking JSON.
 const test1result = findSearchTermInBooks('the', twentyLeaguesIn);
 if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
   console.log('PASS: Test 1');
@@ -157,6 +162,7 @@ if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test1result)) {
 }
 
 /** We could choose to check that we get the right number of results. */
+// Given test for positive match checking length.
 const test2result = findSearchTermInBooks('the', twentyLeaguesIn);
 if (test2result.Results.length == 1) {
   console.log('PASS: Test 2');
@@ -177,6 +183,7 @@ if (test3result.Results.length == 0 && test3result.SearchTerm === '') {
 }
 
 /** Checks case-sensitivity of searchterm. */
+// Suggested test for case-sensitive, checking JSON.
 const test4result = findSearchTermInBooks('The', twentyLeaguesIn);
 if (
   JSON.stringify(twentyLeaguesOutCaseSensitive) === JSON.stringify(test4result)
