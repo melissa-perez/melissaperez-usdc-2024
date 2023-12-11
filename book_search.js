@@ -149,6 +149,22 @@ const twentyLeaguesOutCaseSensitive = {
   ],
 };
 
+const twoBooksDarkOut = {
+  SearchTerm: 'dark',
+  Results: [
+    {
+      ISBN: '9780000528531',
+      Page: 31,
+      Line: 8,
+    },
+    {
+      ISBN: '9780000528522',
+      Page: 30,
+      Line: 1,
+    },
+  ],
+};
+
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
 | | | | \ | |_ _|_   _| |_   _| ____/ ___|_   _/ ___| 
@@ -217,4 +233,33 @@ if (test5result.Results.length == 0) {
   console.log('FAIL: Test 5');
   console.log('Expected:', 0);
   console.log('Received:', test5result.Results.length);
+}
+
+/** Checks that two results from two different books returns. */
+const test6result = findSearchTermInBooks('dark', twoBooks);
+if (test6result.Results.length == 2) {
+  console.log('PASS: Test 6');
+} else {
+  console.log('FAIL: Test 6');
+  console.log('Expected:', 2);
+  console.log('Received:', test6result.Results.length);
+}
+
+const test7result = findSearchTermInBooks('dark', twoBooks);
+if (JSON.stringify(test7result) === JSON.stringify(twoBooksDarkOut)) {
+  console.log('PASS: Test 7');
+} else {
+  console.log('FAIL: Test 7');
+  console.log('Expected:', twoBooksDarkOut);
+  console.log('Received:', test7result);
+}
+
+/** Checks that a line with multiple instances of word returns with length 1. */
+const test8result = findSearchTermInBooks('night', twoBooks);
+if (test8result.Results.length == 1) {
+  console.log('PASS: Test 8');
+} else {
+  console.log('FAIL: Test 8');
+  console.log('Expected:', 1);
+  console.log('Received:', test8result.Results.length);
 }
