@@ -21,6 +21,7 @@
 function findSearchTermInBooks(searchTerm, scannedTextObj) {
   /** You will need to implement your search and
    * return the appropriate object here. */
+  searchTerm = searchTerm.trim();
 
   const searchResults = { SearchTerm: searchTerm, Results: [] };
 
@@ -101,6 +102,13 @@ const twoBooks = [
     ],
   },
 ];
+
+/** Input object of odd length. Contains one book with no scanned content. */
+const oneBookEmptyContent = {
+  Title: 'Twenty Thousand Leagues Under the Sea',
+  ISBN: '9780000528531',
+  Content: [],
+};
 
 // Output Data
 
@@ -194,3 +202,5 @@ if (
   console.log('Expected:', twentyLeaguesOutCaseSensitive);
   console.log('Received:', test4result);
 }
+
+console.log(findSearchTermInBooks(' The ', twentyLeaguesIn));
