@@ -31,13 +31,19 @@ function findSearchTermInBooks(searchTerm, scannedTextObj) {
 
   if (isNotValidSearchTerm) return searchResults;
 
-  for (book of scannedTextObj) {
-    for (scan of book.Content) {
-      if (scan.Text.indexOf(searchTerm) > 0)
+  for (let bookIdx = 0; bookIdx < scannedTextObj.length; bookIdx++) {
+    for (
+      let contentIdx = 0;
+      contentIdx < scannedTextObj[bookIdx].Content.length;
+      contentIdx++
+    ) {
+      if (
+        scannedTextObj[bookIdx].Content[contentIdx].Text.indexOf(searchTerm) > 0
+      )
         searchResults.Results.push({
-          ISBN: book.ISBN,
-          Page: scan.Page,
-          Line: scan.Line,
+          ISBN: scannedTextObj[bookIdx].ISBN,
+          Page: scannedTextObj[bookIdx].Content[contentIdx].Page,
+          Line: scannedTextObj[bookIdx].Content[contentIdx].Line,
         });
     }
   }
@@ -203,4 +209,12 @@ if (
   console.log('Received:', test4result);
 }
 
-console.log(findSearchTermInBooks(' The ', twentyLeaguesIn));
+/** Checks that nothing returns from a book with empty content. */
+const test5result = findSearchTermInBooks('simply', oneBookEmptyContent);
+if (test5result.Results.length == 0) {
+  console.log('PASS: Test 5');
+} else {
+  console.log('FAIL: Test 5');
+  console.log('Expected:', 0);
+  console.log('Received:', test5result.Results.length);
+}
