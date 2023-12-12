@@ -103,7 +103,7 @@ const twoBooks = [
       {
         Page: 30,
         Line: 2,
-        Text: "ness was then profound; and however good the American's America...",
+        Text: "ness was their then profound; and however good the American's America...",
       },
     ],
   },
@@ -149,6 +149,7 @@ const twentyLeaguesOutCaseSensitive = {
   ],
 };
 
+/** Example output object for multiple word matches across books. */
 const twoBooksDarkOut = {
   SearchTerm: 'dark',
   Results: [
@@ -163,6 +164,12 @@ const twoBooksDarkOut = {
       Line: 1,
     },
   ],
+};
+
+/** Example output object for no match. */
+const noMatchOut = {
+  SearchTerm: 'Adult',
+  Results: [],
 };
 
 /*
@@ -262,4 +269,14 @@ if (test8result.Results.length == 1) {
   console.log('FAIL: Test 8');
   console.log('Expected:', 1);
   console.log('Received:', test8result.Results.length);
+}
+
+/** Checks that a word not found returns empty results(negative). */
+const test9result = findSearchTermInBooks('Adult', twoBooks);
+if (JSON.stringify(noMatchOut) === JSON.stringify(test9result)) {
+  console.log('PASS: Test 9');
+} else {
+  console.log('FAIL: Test 9');
+  console.log('Expected:', noMatchOut);
+  console.log('Received:', test9result);
 }
